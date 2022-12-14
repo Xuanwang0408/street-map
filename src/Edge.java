@@ -9,7 +9,7 @@ public class Edge {
         this.inter2 = inter2;
     }
 
-    public String getRaodID() {
+    public String getRoadID() {
         return this.roadID;
     }
 
