@@ -8,7 +8,7 @@ public class Dijkstra {
     public static List<Edge> runDijkstra(Graph g, String startID, String endID) {
         Map<Node, Boolean> visited = new HashMap<>();
         Map<Node, Double> distance = new HashMap<>();
-        Map<Node, List<Edge>> path = new HashMap<>();
+        Map<Node, Edge> path = new HashMap<>();
 
         PriorityQueue<Node> pq = new PriorityQueue<>((a, b) -> (int) (distance.get(a) - distance.get(b)));
         for (Node n : g.getNodes()) {
@@ -17,25 +17,30 @@ public class Dijkstra {
             path.put(n, null);
             if (n.getId().equals(startID)) {
                 distance.replace(n, 0.0);
-                path.replace(n, new ArrayList<Edge>());
                 pq.add(n);
             }
         }
         
         while (pq.size() > 0) {
-            Node previous = pq.poll();
-            if (previous.getId().equals(endID)) {
-                return path.get(previous);
+            Node current = pq.poll();
+            if (current.getId().equals(endID)) {
+                List<Edge> shortestPath = new ArrayList<>();
+                Edge e = path.get(current);
+                while (e != null) {
+                    shortestPath.add(e);
+                    Node previous = e.getNeighbor(current);
+                    e = path.get(previous);
+                    current = previous;
+                }
+                return shortestPath;
             }
-            visited.replace(previous, true);
-            for (Edge e : g.getConnectingEdges(previous)) {
-                Node next = e.getNeighbor(previous);
+            visited.replace(current, true);
+            for (Edge e : g.getConnectingEdges(current)) {
+                Node next = e.getNeighbor(current);
                 if (!visited.get(next)) {
-                    if (distance.get(next) > distance.get(previous) + e.getDistance()) {
-                        distance.replace(next, distance.get(previous) + e.getDistance());
-                        List<Edge> newPath = new ArrayList<>(path.get(previous));
-                        newPath.add(e);
-                        path.replace(next, newPath);
+                    if (distance.get(next) > distance.get(current) + e.getDistance()) {
+                        distance.replace(next, distance.get(current) + e.getDistance());
+                        path.replace(next, e);
                         pq.add(next);
                     }
                 }

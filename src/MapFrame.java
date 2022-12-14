@@ -111,7 +111,7 @@ public class MapFrame extends JFrame {
             for (double[] a : coloredRoads) {
                 g.setColor(Color.RED);
                 Graphics2D g2 = (Graphics2D) g;
-                g2.setStroke(new BasicStroke(10));
+                g2.setStroke(new BasicStroke(3));
                 g.drawLine((int) a[0], (int) a[1], (int) a[2], (int) a[3]);
             }
         }
