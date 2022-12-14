@@ -24,7 +24,7 @@ public class Dijkstra {
         
         while (pq.size() > 0) {
             Node previous = pq.poll();
-            if (previous.getId() == endID) {
+            if (previous.getId().equals(endID)) {
                 return path.get(previous);
             }
             visited.replace(previous, true);
