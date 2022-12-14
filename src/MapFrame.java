@@ -2,7 +2,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.awt.Color;
+import java.awt.BasicStroke;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -108,6 +110,8 @@ public class MapFrame extends JFrame {
             }
             for (double[] a : coloredRoads) {
                 g.setColor(Color.RED);
+                Graphics2D g2 = (Graphics2D) g;
+                g2.setStroke(new BasicStroke(10));
                 g.drawLine((int) a[0], (int) a[1], (int) a[2], (int) a[3]);
             }
         }
