@@ -23,13 +23,13 @@ public class StreetMap {
         List<Edge> shortestPath = null;
         if (directions) {
             shortestPath= Dijkstra.runDijkstra(g, startNode, endNode);
-            Double shortestDistance = -1.0;
+            Double shortestDistance = 0.0;
             if (shortestPath != null) {
                 for (Edge e: shortestPath) {
                     shortestDistance = shortestDistance + e.getDistance();
                 }
             }
-            System.out.println(shortestDistance < 0 ? "Not connected" : shortestDistance);
+            System.out.println(shortestPath == null ? "Not connected" : shortestDistance);
         }
         if (show) {
             MapFrame map = new MapFrame(g.getEdges(), shortestPath);
